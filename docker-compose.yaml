@@ -1,0 +1,29 @@
+services:
+  net:
+    image: memcached
+    restart: unless-stopped
+
+  socket:
+    image: memcached
+    user: 0:0
+    command: memcached -s /var/run/memcached/memcached.sock -u root
+    restart: unless-stopped
+    volumes:
+      - socket:/var/run/memcached
+
+  test:
+    build: .
+    restart: 'no'
+    volumes:
+      - socket:/var/run/memcached
+
+  junit:
+    build: .
+    restart: 'no'
+    command: junit
+    volumes:
+      - ./runtime:/code/runtime
+      - socket:/var/run/memcached
+
+volumes:
+  socket:
