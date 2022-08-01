@@ -7,11 +7,11 @@
     },
     "scripts": {
         "test": [
-            "@composer install --ignore-platform-req=ext-tokenizer --ignore-platform-req=ext-dom --ignore-platform-req=ext-ctype --ignore-platform-req=ext-xmlwriter --ignore-platform-req=ext-xml",
+            "@composer install",
             "phpunit"
         ],
         "test-junit": [
-            "@composer install --ignore-platform-req=ext-tokenizer --ignore-platform-req=ext-dom --ignore-platform-req=ext-ctype --ignore-platform-req=ext-xmlwriter --ignore-platform-req=ext-xml",
+            "@composer install",
             "phpunit --log-junit=runtime/tests.xml"
         ]
     },
