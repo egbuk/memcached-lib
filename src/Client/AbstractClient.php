@@ -4,7 +4,10 @@ namespace HeyMoon\MemcachedLib\Client;
 
 use HeyMoon\MemcachedLib\Contracts\ConfigInterface;
 use HeyMoon\MemcachedLib\Contracts\SocketClientInterface;
+use HeyMoon\MemcachedLib\Exception\CommandSendException;
 use HeyMoon\MemcachedLib\Exception\ConnectException;
+use HeyMoon\MemcachedLib\Exception\Exception;
+use HeyMoon\MemcachedLib\Exception\NotConnectedException;
 
 abstract class AbstractClient implements SocketClientInterface
 {
@@ -38,5 +41,30 @@ abstract class AbstractClient implements SocketClientInterface
     public function isConnected(): bool
     {
         return is_resource($this->socket);
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function execute(string $command): bool|string
+    {
+        if (!$this->isConnected()) {
+            throw new NotConnectedException;
+        }
+        if (!fwrite($this->socket, $command)) {
+            throw new CommandSendException;
+        }
+        return $this->read();
+    }
+
+    /**
+     * @throws NotConnectedException
+     */
+    protected function read($size = null): bool|string
+    {
+        if (!$this->isConnected()) {
+            throw new NotConnectedException;
+        }
+        return fgets($this->socket, $size);
     }
 }

@@ -13,7 +13,7 @@ class AsyncClient extends AbstractClient implements AsyncCacheInterface
         // TODO: Implement getAsync() method.
     }
 
-    public function setAsync(string $key, mixed $value, ?callable $callback = null)
+    public function setAsync(string $key, string $value, int $ttl = 0, ?callable $callback = null)
     {
         // TODO: Implement setAsync() method.
     }

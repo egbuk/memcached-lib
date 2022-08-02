@@ -2,11 +2,22 @@
 
 namespace HeyMoon\MemcachedLib\Contracts;
 
+use HeyMoon\MemcachedLib\Exception\Exception;
+
 interface CacheInterface extends SocketClientInterface
 {
-    public function get(string $key): mixed;
+    /**
+     * @throws Exception
+     */
+    public function get(string $key): ?string;
 
-    public function set(string $key, mixed $value);
+    /**
+     * @throws Exception
+     */
+    public function set(string $key, string $value, int $ttl = 0);
 
+    /**
+     * @throws Exception
+     */
     public function delete(string $key);
 }
