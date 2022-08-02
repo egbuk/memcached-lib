@@ -7,6 +7,7 @@ use HeyMoon\MemcachedLib\Contracts\SocketClientInterface;
 use HeyMoon\MemcachedLib\Exception\CommandSendException;
 use HeyMoon\MemcachedLib\Exception\ConnectException;
 use HeyMoon\MemcachedLib\Exception\Exception;
+use HeyMoon\MemcachedLib\Exception\InvalidKeyException;
 use HeyMoon\MemcachedLib\Exception\NotConnectedException;
 
 abstract class AbstractClient implements SocketClientInterface
@@ -66,5 +67,21 @@ abstract class AbstractClient implements SocketClientInterface
             throw new NotConnectedException;
         }
         return fgets($this->socket, $size);
+    }
+
+    protected function sanitizeKey($key): string
+    {
+        return preg_replace("/[^\w\d]/", '', $key);
+    }
+
+    /**
+     * @throws InvalidKeyException
+     */
+    protected function checkKey($key): string
+    {
+        if ($this->sanitizeKey($key) !== $key) {
+            throw new InvalidKeyException($key);
+        }
+        return $key;
     }
 }

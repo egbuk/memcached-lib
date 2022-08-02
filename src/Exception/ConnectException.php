@@ -2,6 +2,6 @@
 
 namespace HeyMoon\MemcachedLib\Exception;
 
-class ConnectException extends Exception
+final class ConnectException extends Exception
 {
 }

@@ -2,6 +2,6 @@
 
 namespace HeyMoon\MemcachedLib\Exception;
 
-final class NotConnectedException extends Exception
+class AlreadyExecutingException extends Exception
 {
 }

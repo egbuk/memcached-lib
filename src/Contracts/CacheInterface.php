@@ -14,10 +14,10 @@ interface CacheInterface extends SocketClientInterface
     /**
      * @throws Exception
      */
-    public function set(string $key, string $value, int $ttl = 0);
+    public function set(string $key, string $value, int $ttl = 0): void;
 
     /**
      * @throws Exception
      */
-    public function delete(string $key);
+    public function delete(string $key): void;
 }
